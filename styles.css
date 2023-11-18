@@ -1,0 +1,153 @@
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --green1: rgb(83, 175, 19);
+  --green2: rgb(152, 207, 113);
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--white)
+}
+
+header {
+  margin: 0 auto;
+  line-height: 16.5dvh;
+  text-align: center;
+  height: 16.5dvh;
+  color: var(--green1);
+  animation: animate 1.5s infinite;
+  font-size: 1.66rem;
+}
+
+@keyframes animate{
+  0% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.25;
+  }
+}
+
+.hit {
+  background: url("./img/ship.png") no-repeat center center;
+  background-size: contain;
+}
+
+.miss {
+  background: url("./img/miss.png") no-repeat center center;
+  background-size: contain;
+}
+
+table {
+  aspect-ratio: 1 / 1;
+  height: 66dvh;
+  margin: 0 auto;
+  border-spacing: 1px;
+  text-align: center;
+}
+
+td {
+  border: thin solid var(--green1);
+  width: 9%;
+}
+
+.topLeft {
+  border-top: none;
+  border-left: none;
+}
+
+footer {
+  margin: 0 auto;
+  height: 16.5dvh;
+  padding-top: 3.5rem;
+}
+
+form {
+  margin: 0 auto;
+  max-width: 300px;
+  padding: 1rem;
+  background-color: var(--green1);
+  border-radius: 5px;
+}
+
+form input {
+  background-color: var(--green2);
+  border-color: var(--green1);
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.radar_container {
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  aspect-ratio: 1 / 1;
+  height: 66dvh;
+}
+
+.container {
+  position: relative;
+  top: 33.5%;
+  left: 34.5%;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 0 #aaa;
+  z-index: -1;
+  opacity: 75%
+}
+
+.container::after, .container::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: thin solid var(--green2);
+  animation: ripple 5s infinite linear;
+}
+
+.container::after {
+  animation-delay: 1.5s;
+}
+
+.sweep {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: conic-gradient(transparent, var(--green2));
+  position: absolute;
+  animation: sweep 8s infinite linear;
+  z-index: -1;
+  opacity: 55%
+}
+
+@keyframes sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(3.12);
+  }
+}
