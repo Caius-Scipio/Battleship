@@ -1,3 +1,4 @@
+// Initializes the game by setting up event listeners and generating ship locations
 function init() {
   let fireButton = document.getElementById("fireButton");
   fireButton.onclick = handleFireButton;
@@ -13,6 +14,7 @@ function init() {
   missSound.volume = 0.3;
 };
 
+// Manages the view of the game, including displaying messages and updating the board
 let view = {
   displayMessage: function (msg) {
     let messageArea = document.getElementById("messageArea");
@@ -28,6 +30,7 @@ let view = {
   }
 };
 
+// Manages the game model, including tracking ship locations and the game state
 let model = {
   boardSize: 10,
   numShips: 5,
@@ -42,10 +45,13 @@ let model = {
   ],
   gameOver: false,
 
+  // Checks the given guess against the ship locations and updates the game state accordingly
   fire: function (guess) {
     if (!this.gameOver) {
       for (let i = 0; i < this.numShips; i++) {
         let ship = this.ships[i];
+
+        // Check if the guess matches a location on the ship
         let index = ship.locations.indexOf(guess);
         if (index >= 0) {
           ship.hits[index] = "hit";
@@ -72,6 +78,7 @@ let model = {
     };
   },
 
+  // Checks if the given ship has been sunk
   isSunk: function (ship) {
     for (let i = 0; i < this.shipLength; i++) {
       if (ship.hits[i] !== "hit") {
@@ -81,6 +88,7 @@ let model = {
     return true;
   },
 
+  // Generates random ship locations on the board
   generateShipLocations: function() {
     let locations;
     for (let i = 0; i < this.numShips; i++) {
@@ -91,10 +99,12 @@ let model = {
     }
   },
 
+  // Generates a new set of ship locations
   generateShip: function () {
     let direction = Math.floor(Math.random() * 2);
     let row, col;
 
+      // Determine the direction of the ship (horizontal or vertical)
     if (direction === 1) {
       row = Math.floor(Math.random() * this.boardSize);
       col = Math.floor(Math.random() * (this.boardSize - this.shipLength));
@@ -103,6 +113,8 @@ let model = {
       col = Math.floor(Math.random() * this.boardSize);
     }
     let newShipLocations = [];
+
+    // Create an array of locations for the ship based on its direction and length
     for (let i = 0; i < this.shipLength; i++) {
       if (direction === 1) {
         newShipLocations.push(row + "" + (col + i));
@@ -113,6 +125,7 @@ let model = {
     return newShipLocations;
   },
 
+  // Checks for collisions between the given locations and existing ships on the board
   collision: function (locations) {
     for (let i = 0; i < this.numShips; i++) {
       let ship = model.ships[i];
@@ -126,9 +139,11 @@ let model = {
   }
 };
 
+// Manages the player's guesses and updates the game state accordingly
 let controller = {
   guesses: 0,
 
+  // Processes a player's guess by checking against ship locations and updating the view
   processGuess: function (guess) {
     let location = parseGuess(guess);
     if (location) {
@@ -141,6 +156,7 @@ let controller = {
   }
 };
 
+// Parses a player's guess from a string into a numerical location
 function parseGuess(guess) {
   let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
   if (guess === null || guess.length !== 2) {
@@ -162,6 +178,7 @@ function parseGuess(guess) {
   return null;
 };
 
+// Handles a click on the fire button
 function handleFireButton() {
   let guessInput = document.getElementById("guessInput");
   let guess = guessInput.value;
@@ -169,6 +186,7 @@ function handleFireButton() {
   guessInput.value = "";
 };
 
+// Handles a key press on the guess input field
 function handleKeyPress(e) {
   let fireButton = document.getElementById("fireButton");
   if (e.keyCode === 13) {
@@ -177,6 +195,7 @@ function handleKeyPress(e) {
   }
 };
 
+// Handles a click on a cell on the board
 function handleCellClick(event) {
   let cellEvent = event.target;
   let location = cellEvent.id;
@@ -195,4 +214,5 @@ function handleCellClick(event) {
   controller.processGuess(alphanumericLocation.toUpperCase());
 };
 
+// Initialize the game when the page loads
 window.onload = init;

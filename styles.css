@@ -20,12 +20,13 @@ body {
 
 header {
   margin: 0 auto;
-  line-height: 16.5dvh;
+  /* line-height: 16.5dvh; */
   text-align: center;
   height: 16.5dvh;
   color: var(--green1);
   animation: animate 1.5s infinite;
   font-size: 1.66rem;
+  padding-top: 2.5rem;
 }
 
 @keyframes animate{
